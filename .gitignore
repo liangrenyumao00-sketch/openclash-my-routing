@@ -1,0 +1,12 @@
+__pycache__/
+*.pyc
+.venv/
+.validation/
+.release/
+路由器本地备份/
+本地验证/
+*.exe
+*.zip
+*.log
+*.png
+*.jpg
