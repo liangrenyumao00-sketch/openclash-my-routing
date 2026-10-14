@@ -143,6 +143,8 @@ def validate_config(config: dict) -> None:
         fallback = group.get("empty-fallback", "COMPATIBLE")
         if fallback not in BUILTINS | set(TEST_NODES):
             raise ValidationError(f"empty-fallback must be a concrete proxy, not a group: {name}")
+        if group.get("type") in {"url-test", "fallback", "load-balance"} and group.get("include-all") and fallback != "REJECT":
+            raise ValidationError(f"automatic group must set empty-fallback: REJECT when its candidate list is empty: {name}")
         graph[name] = [ref for ref in refs if ref in names]
     active, visited = set(), set()
 
