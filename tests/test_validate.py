@@ -15,7 +15,7 @@ MODULE = """[General]
 [YAML]
 proxy-groups!:
   - {name: Proxy, type: select, proxies: [Auto, DIRECT]}
-  - {name: Auto, type: url-test, include-all: true, url: 'https://www.gstatic.com/generate_204', interval: 300}
+  - {name: Auto, type: url-test, include-all: true, empty-fallback: REJECT, url: 'https://www.gstatic.com/generate_204', interval: 300}
 rule-providers:
   private: {type: http, behavior: domain, format: mrs, interval: 86400, path: ./rule_provider/private.mrs, url: 'https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/meta/geo/geosite/private.mrs'}
   china: {type: http, behavior: domain, format: mrs, interval: 86400, path: ./rule_provider/china.mrs, url: 'https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/meta/geo/geosite/cn.mrs'}
@@ -52,6 +52,11 @@ class ValidateTests(unittest.TestCase):
         self.assertEqual({p["server"] for p in fixture["proxies"]}, {"127.0.0.1"})
         self.assertEqual(len(fixture["proxies"]), 6)
         self.assertEqual(fixture["rules"][-1], "MATCH,Proxy")
+
+    def test_dynamic_automatic_groups_reject_when_they_have_no_candidates(self):
+        self.config["proxy-groups"][1].pop("empty-fallback")
+        with self.assertRaisesRegex(validate.ValidationError, "empty-fallback"):
+            validate.validate_config(self.config)
 
     def test_unknown_rule_target_blocks_release(self):
         self.config["rules"][-1] = "MATCH,Misspelled"
