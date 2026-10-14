@@ -25,11 +25,11 @@
 
 这是运行状态页的“覆写模块”按钮，与菜单中的“覆写设置”不是同一个入口。如果安装版本没有此按钮，应先确认版本，不能照这份流程硬套到旧版本。
 
-模块会替换原分组、原规则及原规则提供商，但保留原订阅节点和代理提供商。订阅更新后，OpenClash 重启时会重新应用它。规则源每 24 小时更新；分组文件每周日 4 点拉取，下载成功后自动重启应用，可能有短暂连接中断。手动修改在线文件后，也可刷新模块并重启。
+模块会替换原分组和原规则，添加自己的规则库，但保留原订阅节点和代理提供商。订阅更新后，OpenClash 重启时会重新应用它。规则源每 24 小时更新；分组文件每周日 4 点拉取，下载成功后自动重启应用，可能有短暂连接中断。手动修改在线文件后，也可刷新模块并重启。
 
 地区分组按节点名称归类。机场没有对应地区，或节点名无法识别时，该组显示拒绝连接，应选择其他实际存在的地区或“节点选择”；不会悄悄换到别的国家。AI 和流媒体需要选服务支持的节点，不能用测速结果保证解锁。你自定义的局域网域名（例如公网形式的 NAS 域名）如果不在本地名单中，需要另加直连例外。
 
-若启用了会提前绕过中国 IP 的“地区绕行”，被绕过的连接不会进入这套规则；要让全部连接交给规则判断，需要检查这一选项。若有其他模块同时修改分组/规则，也应检查覆写顺序，避免互相覆盖。
+模块启用后会关闭 IPv4/IPv6 的“地区绕行”，避免部分连接提前跳过规则；国内网站仍由名单判断为直连。若有其他模块同时修改分组/规则，也应检查覆写顺序，避免互相覆盖。
 
 ## 在线地址怎么得到
 
@@ -52,5 +52,6 @@
 - [16-overwrite-module-format.md §16.1.1、§16.2.3](https://raw.githubusercontent.com/vernesong/OpenClash/dev/.github/skills/openclash-user-guide/16-overwrite-module-format.md)：入口、替换数组、重启生效。
 - [17-overwrite-module-examples.md §17.5.1](https://raw.githubusercontent.com/vernesong/OpenClash/dev/.github/skills/openclash-user-guide/17-overwrite-module-examples.md)：在线更新与重启。
 - [07-page-overview.md §7.3–7.4](https://raw.githubusercontent.com/vernesong/OpenClash/dev/.github/skills/openclash-user-guide/07-page-overview.md)：规则模式、地区绕行。
+- [08-settings-mode-traffic.md §8.3.5](https://raw.githubusercontent.com/vernesong/OpenClash/dev/.github/skills/openclash-user-guide/08-settings-mode-traffic.md)：地区绕行会使部分连接提前跳过规则。
 - [Mihomo 策略组](https://wiki.metacubex.one/config/proxy-groups/)、[路由规则](https://wiki.metacubex.one/config/rules/)、[规则提供商](https://wiki.metacubex.one/config/rule-providers/)。
 - [MetaCubeX/meta-rules-dat](https://github.com/MetaCubeX/meta-rules-dat)：规则分类与在线数据。
