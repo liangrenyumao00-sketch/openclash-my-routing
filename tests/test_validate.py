@@ -220,6 +220,20 @@ class PublishedRoutingTests(unittest.TestCase):
         self.assertEqual(group["proxies"][0], "新加坡节点")
         self.assertTrue({"香港节点", "日本节点", "DIRECT"}.issubset(group["proxies"]))
 
+    def test_direct_is_near_front_without_changing_selector_defaults(self):
+        defaults = {
+            "节点选择": "自动选择",
+            "ChatGPT": "美国节点", "Claude": "美国节点", "Gemini": "美国节点",
+            "AI服务": "美国节点", "TikTok": "美国节点",
+            "动漫平台": "台湾节点", "飞行宝": "新加坡节点", "国内网站": "DIRECT",
+        }
+        for name, group in self.groups.items():
+            if group["type"] != "select" or "DIRECT" not in group.get("proxies", []):
+                continue
+            with self.subTest(group=name):
+                self.assertEqual(group["proxies"][0], defaults.get(name, "节点选择"))
+                self.assertLessEqual(group["proxies"].index("DIRECT"), 1)
+
     def test_published_module_keeps_local_rules_before_service_exceptions(self):
         # Validate the real artifact, not just the synthetic validation fixture:
         # moving any service exception ahead of the local prefix must fail.
