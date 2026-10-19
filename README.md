@@ -32,7 +32,7 @@
 
 ## 分组
 
-共 37 个分组。平时主要使用服务分组和地区分组，自动备用组按需展开即可。
+模块定义 37 个分组。部分控制面板还会显示内核自带的 `GLOBAL`，合计为 38 个。平时主要使用服务分组和地区分组，自动备用组按需展开即可。
 
 | 分组 | 用途 |
 | --- | --- |
@@ -80,11 +80,17 @@
 
 已使用旧 `main` 地址的用户，可在模块设置中把地址里的 `/main/` 换成 `/stable/`，保存后刷新。
 
-自行维护时，可 Fork 本仓库，在主分支修改 `My_Routing.ini`；启用 GitHub Actions 后，通过检查的版本会自动发布到自己的 `stable` 分支。
+自行维护时，可 Fork 本仓库，在主分支修改 `My_Routing.ini`；启用 GitHub Actions 后，通过检查的版本会自动发布到自己的 `stable` 分支。OpenClash 中的模块订阅地址也应改为自己的 GitHub 账号和仓库名。检查命令与发布机制见[维护说明](CONTRIBUTING.md)。
 
 恢复原分组和规则：关闭 `My_Routing` 的开关，然后重启 OpenClash。
 
-仓库保留[上一版配置](https://raw.githubusercontent.com/liangrenyumao00-sketch/openclash-my-routing/stable/My_Routing.previous.ini)。需要退回时，可下载保存，作为本地覆写模块使用，同时关闭在线模块以免重复覆盖。
+仓库保留[上一版配置](https://raw.githubusercontent.com/liangrenyumao00-sketch/openclash-my-routing/stable/My_Routing.previous.ini)。需要退回时，将其下载并添加为本地覆写模块，启用本地模块、关闭在线模块，然后重启 OpenClash。上一版仍需与实际 OpenClash 版本和节点订阅兼容；恢复在线更新时，关闭本地模块，再启用在线模块并重启。
+
+## 故障排查
+
+节点订阅、覆写模块和规则名单分别更新：节点订阅提供线路，`My_Routing` 管理分组与规则，规则名单由各规则源更新。更新模块不会修复失效节点或订阅下载失败。
+
+遇到分组缺失、节点全部超时、订阅更新失败或网站线路异常时，先在 **运行日志 → 调试日志 → 生成日志** 中收集信息，再按[故障排查说明](docs/troubleshooting.md)检查。公开反馈只需提供脱敏后的报错片段、软件版本和复现步骤。
 
 ## 使用说明
 
@@ -94,7 +100,6 @@
 - 在控制面板的 **连接** 页面，可以查看网站命中了哪条规则、使用哪个分组和节点。
 - 电脑或手机应通过 OpenClash 所在路由器上网。多层路由时，设备网关可以是下一级路由器，关键是后续流量和 DNS 仍经过 OpenClash。IPv6 若从其他网关出站，会绕开这套 IPv4 分流；应单独核对。
 - 模块会关闭 IPv4/IPv6 的“区域绕过”，让流量交给这里的规则判断。关闭模块后，如需恢复原来的区域绕过设置，应在运行状态页手动调整。
-- 启动或访问异常时，可在 **运行日志 → 调试日志 → 生成日志** 中收集排查信息。
 
 <details>
 <summary>与其他配置一起使用</summary>

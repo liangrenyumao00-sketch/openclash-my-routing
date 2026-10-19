@@ -10,3 +10,21 @@ __pycache__/
 *.log
 *.png
 *.jpg
+
+# Local credentials, captures, and device backups
+.env
+.env.*
+!.env.example
+*.key
+*.pem
+.ssh/
+id_rsa
+id_ed25519
+*.har
+*.pcap
+*.pcapng
+*.bak
+*.backup
+*.tar
+*.tar.gz
+OpenClash排查记录/
