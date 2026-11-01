@@ -213,6 +213,11 @@ class PublishedRoutingTests(unittest.TestCase):
             ["fsx.org.cn", "www.fsx.org.cn", "future.assets.fsx.org.cn"], "飞行宝",
         )
 
+    def test_ohmycodex_main_and_future_subdomains_always_use_foreign_group(self):
+        self.assert_service_override(
+            ["ohmycodex.cn", "www.ohmycodex.cn", "future.api.ohmycodex.cn"], "国外网站",
+        )
+
     def test_fsx_selector_defaults_to_singapore_with_regional_and_direct_alternatives(self):
         group = self.groups.get("飞行宝")
         self.assertIsNotNone(group, "missing independent selector for 飞行宝")
